@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Firebase Authentication</title>
+
+</head>
+<body>
+    <div class="container">
+        <h1>Welcome to Nishad-2003</h1>
+        
+        <div id="auth-section">
+            <div class="form-group">
+                <label for="phone">Phone Number</label>
+                <input type="tel" id="phone" placeholder="+919876543210">
+            </div>
+            
+            <button class="phone-btn" id="send-otp-btn">Send OTP</button>
+            
+            <div id="otp-section" class="otp-section">
+                <div class="form-group">
+                    <label for="otp">Enter OTP</label>
+                    <input type="text" id="otp" placeholder="6-digit code" maxlength="6">
+                </div>
+                <button class="phone-btn" id="verify-otp-btn">Verify OTP</button>
+            </div>
+            
+            <div class="divider">OR</div>
+            
+            <button class="google-btn" id="google-signin-btn">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/5/53/Google_%22G%22_Logo.svg" class="google-icon" alt="Google logo">
+                Sign in with Google
+            </button>
+            
+            <div id="recaptcha-container" class="recaptcha-container"></div>
+            
+            <div id="status-message" class="status"></div>
+        </div>
+        
+        <div id="user-section" class="user-info">
+            <img id="user-avatar" class="user-avatar" src="" alt="User avatar">
+            <div id="user-name" class="user-name"></div>
+            <div id="user-email" class="user-email"></div>
+            <button class="sign-out" id="sign-out-btn">Sign Out</button>
+        </div>
+    </div>
+
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-analytics.js"></script>
+    
+    <script>
+        // Your Firebase configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyBhCgtAOzaUFr2STB0D8MLEPYY9gsxQ1k8",
+            authDomain: "nishad-2003.firebaseapp.com",
+            databaseURL: "https://nishad-2003-default-rtdb.firebaseio.com",
+            projectId: "nishad-2003",
+            storageBucket: "nishad-2003.firebasestorage.app",
+            messagingSenderId: "498275983867",
+            appId: "1:498275983867:web:7686c69457a318feb5ab5e",
+            measurementId: "G-FVSW9N4RCQ"
+        };
+
+        // Initialize Firebase
+        const app = firebase.initializeApp(firebaseConfig);
+        const analytics = firebase.analytics();
+        const auth = firebase.auth();
+        
+        // DOM elements
+        const authSection = document.getElementById('auth-section');
+        const userSection = document.getElementById('user-section');
+        const sendOtpBtn = document.getElementById('send-otp-btn');
+        const verifyOtpBtn = document.getElementById('verify-otp-btn');
+        const googleSignInBtn = document.getElementById('google-signin-btn');
+        const signOutBtn = document.getElementById('sign-out-btn');
+        const phoneInput = document.getElementById('phone');
+        const otpInput = document.getElementById('otp');
+        const otpSection = document.getElementById('otp-section');
+        const statusMessage = document.getElementById('status-message');
+        const recaptchaContainer = document.getElementById('recaptcha-container');
+        
+        let confirmationResult;
+        let recaptchaVerifier;
+        
+        // Initialize recaptcha
+        function initRecaptcha() {
+            recaptchaVerifier = new firebase.auth.RecaptchaVerifier('recaptcha-container', {
+                'size': 'invisible',
+                'callback': () => {
+                    // reCAPTCHA solved, allow sendOTP
+                }
+            });
+        }
+        
+        // Send OTP
+        sendOtpBtn.addEventListener('click', async () => {
+            const phoneNumber = phoneInput.value.trim();
+            
+            if (!phoneNumber) {
+                showStatus('Please enter a phone number', 'error');
+                return;
+            }
+            
+            try {
+                if (!recaptchaVerifier) initRecaptcha();
+                
+                confirmationResult = await auth.signInWithPhoneNumber(phoneNumber, recaptchaVerifier);
+                otpSection.style.display = 'block';
+                sendOtpBtn.style.display = 'none';
+                showStatus('OTP sent to your phone', 'success');
+            } catch (error) {
+                console.error('Error sending OTP:', error);
+                showStatus(error.message, 'error');
+            }
+        });
+        
+        // Verify OTP
+        verifyOtpBtn.addEventListener('click', async () => {
+            const otp = otpInput.value.trim();
+            
+            if (!otp || otp.length !== 6) {
+                showStatus('Please enter a valid 6-digit OTP', 'error');
+                return;
+            }
+            
+            try {
+                await confirmationResult.confirm(otp);
+                showStatus('Phone number verified!', 'success');
+            } catch (error) {
+                console.error('Error verifying OTP:', error);
+                showStatus('Invalid OTP. Please try again.', 'error');
+            }
+        });
+        
+        // Google Sign-In
+        googleSignInBtn.addEventListener('click', () => {
+            const provider = new firebase.auth.GoogleAuthProvider();
+            
+            auth.signInWithPopup(provider)
+                .then((result) => {
+                    // Google sign-in successful
+                })
+                .catch((error) => {
+                    console.error('Google sign-in error:', error);
+                    showStatus(error.message, 'error');
+                });
+        });
+        
+        // Sign Out
+        signOutBtn.addEventListener('click', () => {
+            auth.signOut();
+        });
+        
+        // Auth state listener
+        auth.onAuthStateChanged((user) => {
+            if (user) {
+                // User is signed in
+                authSection.style.display = 'none';
+                userSection.style.display = 'block';
+                
+                // Update user info
+                document.getElementById('user-name').textContent = user.displayName || 'User';
+                document.getElementById('user-email').textContent = user.email || user.phoneNumber || '';
+                
+                if (user.photoURL) {
+                    document.getElementById('user-avatar').src = user.photoURL;
+                } else {
+                    document.getElementById('user-avatar').src = 'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png';
+                }
+                
+                showStatus(`Welcome, ${user.displayName || 'User'}!`, 'success');
+            } else {
+                // User is signed out
+                authSection.style.display = 'block';
+                userSection.style.display = 'none';
+                otpSection.style.display = 'none';
+                sendOtpBtn.style.display = 'block';
+                phoneInput.value = '';
+                otpInput.value = '';
+            }
+        });
+        
+        // Show status message
+        function showStatus(message, type) {
+            statusMessage.textContent = message;
+            statusMessage.className = 'status ' + type;
+        }
+        
+        // Initialize
+        initRecaptcha();
+    </script>
+</body>
+</html>
