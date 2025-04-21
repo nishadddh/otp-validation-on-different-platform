@@ -1,19 +1,590 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Firebase Authentication</title>
+    <title>Secure Authentication</title>
+    <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet" type="text/css">
+    <style>
+        body {
+            font-family: 'Roboto', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f5f5f5;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+        
+        .container {
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            padding: 30px;
+            width: 100%;
+            max-width: 400px;
+            text-align: center;
+        }
+        
+        h1 {
+            color: #333;
+            margin-bottom: 24px;
+            font-size: 24px;
+        }
+        
+        .form-group {
+            margin-bottom: 16px;
+            text-align: left;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 6px;
+            font-weight: 500;
+            color: #555;
+        }
+        
+        input, select {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 16px;
+            box-sizing: border-box;
+        }
+        
+        .phone-input-container {
+            display: flex;
+            gap: 8px;
+        }
+        
+        .country-code {
+            flex: 0 0 120px;
+        }
+        
+        .phone-number {
+            flex: 1;
+        }
+        
+        button {
+            width: 100%;
+            padding: 12px;
+            border: none;
+            border-radius: 4px;
+            font-size: 16px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background-color 0.2s;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+        
+        .phone-btn {
+            background-color: #4285f4;
+            color: white;
+        }
+        
+        .phone-btn:hover {
+            background-color: #3367d6;
+        }
+        
+        /* Google Sign-In Button Styles */
+        .gsi-material-button {
+            -moz-user-select: none;
+            -webkit-user-select: none;
+            -ms-user-select: none;
+            -webkit-appearance: none;
+            background-color: WHITE;
+            background-image: none;
+            border: 1px solid #747775;
+            -webkit-border-radius: 4px;
+            border-radius: 4px;
+            -webkit-box-sizing: border-box;
+            box-sizing: border-box;
+            color: #1f1f1f;
+            cursor: pointer;
+            font-family: 'Roboto', arial, sans-serif;
+            font-size: 14px;
+            height: 40px;
+            letter-spacing: 0.25px;
+            outline: none;
+            overflow: hidden;
+            padding: 0 12px;
+            position: relative;
+            text-align: center;
+            -webkit-transition: background-color .218s, border-color .218s, box-shadow .218s;
+            transition: background-color .218s, border-color .218s, box-shadow .218s;
+            vertical-align: middle;
+            white-space: nowrap;
+            width: auto;
+            min-width: min-content;
+        }
+        
+        .gsi-material-button .gsi-material-button-icon {
+            height: 20px;
+            margin-right: 12px;
+            min-width: 20px;
+            width: 20px;
+        }
+        
+        .gsi-material-button .gsi-material-button-content-wrapper {
+            -webkit-align-items: center;
+            align-items: center;
+            display: flex;
+            -webkit-flex-direction: row;
+            flex-direction: row;
+            -webkit-flex-wrap: nowrap;
+            flex-wrap: nowrap;
+            height: 100%;
+            justify-content: space-between;
+            position: relative;
+            width: 100%;
+        }
+        
+        .gsi-material-button .gsi-material-button-contents {
+            -webkit-flex-grow: 1;
+            flex-grow: 1;
+            font-family: 'Roboto', arial, sans-serif;
+            font-weight: 500;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            vertical-align: top;
+        }
+        
+        .gsi-material-button .gsi-material-button-state {
+            -webkit-transition: opacity .218s;
+            transition: opacity .218s;
+            bottom: 0;
+            left: 0;
+            opacity: 0;
+            position: absolute;
+            right: 0;
+            top: 0;
+        }
+        
+        .gsi-material-button:disabled {
+            cursor: default;
+            background-color: #ffffff61;
+            border-color: #1f1f1f1f;
+        }
+        
+        .gsi-material-button:disabled .gsi-material-button-contents {
+            opacity: 38%;
+        }
+        
+        .gsi-material-button:disabled .gsi-material-button-icon {
+            opacity: 38%;
+        }
+        
+        .gsi-material-button:not(:disabled):active .gsi-material-button-state, 
+        .gsi-material-button:not(:disabled):focus .gsi-material-button-state {
+            background-color: #303030;
+            opacity: 12%;
+        }
+        
+        .gsi-material-button:not(:disabled):hover {
+            -webkit-box-shadow: 0 1px 2px 0 rgba(60, 64, 67, .30), 0 1px 3px 1px rgba(60, 64, 67, .15);
+            box-shadow: 0 1px 2px 0 rgba(60, 64, 67, .30), 0 1px 3px 1px rgba(60, 64, 67, .15);
+        }
+        
+        .gsi-material-button:not(:disabled):hover .gsi-material-button-state {
+            background-color: #303030;
+            opacity: 8%;
+        }
+        
+        /* Microsoft Button Styles */
+        .microsoft-btn {
+            background-color: white;
+            color: #5E5E5E;
+            border: 1px solid #8C8C8C;
+        }
+        
+        .microsoft-btn:hover {
+            background-color: #F5F5F5;
+        }
+        
+        .provider-icon {
+            height: 20px;
+            width: 20px;
+        }
+        
+        .divider {
+            margin: 20px 0;
+            color: #999;
+            position: relative;
+        }
+        
+        .divider::before, .divider::after {
+            content: "";
+            position: absolute;
+            top: 50%;
+            width: 45%;
+            height: 1px;
+            background-color: #ddd;
+        }
+        
+        .divider::before {
+            left: 0;
+        }
+        
+        .divider::after {
+            right: 0;
+        }
+        
+        .otp-section {
+            display: none;
+            margin-top: 16px;
+        }
+        
+        .status {
+            margin: 16px 0;
+            padding: 10px;
+            border-radius: 4px;
+            font-size: 14px;
+        }
+        
+        .status.success {
+            background-color: #e6f7ee;
+            color: #2e7d32;
+        }
+        
+        .status.error {
+            background-color: #ffebee;
+            color: #c62828;
+        }
+        
+        .user-info {
+            display: none;
+            text-align: center;
+        }
+        
+        .user-avatar {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            margin-bottom: 16px;
+            object-fit: cover;
+        }
+        
+        .user-name {
+            font-size: 18px;
+            font-weight: 500;
+            margin-bottom: 4px;
+        }
+        
+        .user-email {
+            color: #666;
+            margin-bottom: 20px;
+        }
+        
+        .sign-out {
+            background-color: #f44336;
+            color: white;
+        }
+        
+        .sign-out:hover {
+            background-color: #d32f2f;
+        }
 
+
+
+        /* Google Sign-In Button Styles - Adjusted to match Microsoft */
+.gsi-material-button {
+    -webkit-appearance: none;
+    background-color: white;
+    border: 1px solid #747775;
+    border-radius: 4px;
+    box-sizing: border-box;
+    color: #1f1f1f;
+    cursor: pointer;
+    font-family: 'Roboto', sans-serif;
+    font-size: 14px;
+    height: 40px;
+    letter-spacing: 0.25px;
+    outline: none;
+    overflow: hidden;
+    padding: 0 12px;
+    position: relative;
+    text-align: center;
+    transition: background-color 0.2s, border-color 0.2s;
+    vertical-align: middle;
+    width: 100%;
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.gsi-material-button .gsi-material-button-icon {
+    height: 20px;
+    margin-right: 12px;
+    min-width: 20px;
+    width: 20px;
+}
+
+.gsi-material-button .gsi-material-button-content-wrapper {
+    align-items: center;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    height: 100%;
+    justify-content: center;
+    position: relative;
+    width: 100%;
+}
+
+.gsi-material-button .gsi-material-button-contents {
+    flex-grow: 1;
+    font-family: 'Roboto', sans-serif;
+    font-weight: 500;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    vertical-align: top;
+}
+
+.gsi-material-button:hover {
+    background-color: #f9f9f9;
+    box-shadow: 0 1px 2px 0 rgba(60, 64, 67, 0.30), 0 1px 3px 1px rgba(60, 64, 67, 0.15);
+}
+
+
+
+
+    </style>
 </head>
 <body>
     <div class="container">
-        <h1>Welcome to Nishad-2003</h1>
+        <h1>Welcome to Secure Authentication</h1>
         
         <div id="auth-section">
             <div class="form-group">
                 <label for="phone">Phone Number</label>
-                <input type="tel" id="phone" placeholder="+919876543210">
+                <div class="phone-input-container">
+                    <select id="country-code" class="country-code">
+                        <option data-countryCode="IN" value="91" Selected>India (+91)</option>
+                        <option data-countryCode="GB" value="44">UK (+44)</option>
+                        <option data-countryCode="US" value="1">USA (+1)</option>
+                        <optgroup label="Other countries">
+                            <option data-countryCode="DZ" value="213">Algeria (+213)</option>
+                            <option data-countryCode="AD" value="376">Andorra (+376)</option>
+                            <option data-countryCode="AO" value="244">Angola (+244)</option>
+                            <option data-countryCode="AI" value="1264">Anguilla (+1264)</option>
+                            <option data-countryCode="AG" value="1268">Antigua &amp; Barbuda (+1268)</option>
+                            <option data-countryCode="AR" value="54">Argentina (+54)</option>
+                            <option data-countryCode="AM" value="374">Armenia (+374)</option>
+                            <option data-countryCode="AW" value="297">Aruba (+297)</option>
+                            <option data-countryCode="AU" value="61">Australia (+61)</option>
+                            <option data-countryCode="AT" value="43">Austria (+43)</option>
+                            <option data-countryCode="AZ" value="994">Azerbaijan (+994)</option>
+                            <option data-countryCode="BS" value="1242">Bahamas (+1242)</option>
+                            <option data-countryCode="BH" value="973">Bahrain (+973)</option>
+                            <option data-countryCode="BD" value="880">Bangladesh (+880)</option>
+                            <option data-countryCode="BB" value="1246">Barbados (+1246)</option>
+                            <option data-countryCode="BY" value="375">Belarus (+375)</option>
+                            <option data-countryCode="BE" value="32">Belgium (+32)</option>
+                            <option data-countryCode="BZ" value="501">Belize (+501)</option>
+                            <option data-countryCode="BJ" value="229">Benin (+229)</option>
+                            <option data-countryCode="BM" value="1441">Bermuda (+1441)</option>
+                            <option data-countryCode="BT" value="975">Bhutan (+975)</option>
+                            <option data-countryCode="BO" value="591">Bolivia (+591)</option>
+                            <option data-countryCode="BA" value="387">Bosnia Herzegovina (+387)</option>
+                            <option data-countryCode="BW" value="267">Botswana (+267)</option>
+                            <option data-countryCode="BR" value="55">Brazil (+55)</option>
+                            <option data-countryCode="BN" value="673">Brunei (+673)</option>
+                            <option data-countryCode="BG" value="359">Bulgaria (+359)</option>
+                            <option data-countryCode="BF" value="226">Burkina Faso (+226)</option>
+                            <option data-countryCode="BI" value="257">Burundi (+257)</option>
+                            <option data-countryCode="KH" value="855">Cambodia (+855)</option>
+                            <option data-countryCode="CM" value="237">Cameroon (+237)</option>
+                            <option data-countryCode="CA" value="1">Canada (+1)</option>
+                            <option data-countryCode="CV" value="238">Cape Verde Islands (+238)</option>
+                            <option data-countryCode="KY" value="1345">Cayman Islands (+1345)</option>
+                            <option data-countryCode="CF" value="236">Central African Republic (+236)</option>
+                            <option data-countryCode="CL" value="56">Chile (+56)</option>
+                            <option data-countryCode="CN" value="86">China (+86)</option>
+                            <option data-countryCode="CO" value="57">Colombia (+57)</option>
+                            <option data-countryCode="KM" value="269">Comoros (+269)</option>
+                            <option data-countryCode="CG" value="242">Congo (+242)</option>
+                            <option data-countryCode="CK" value="682">Cook Islands (+682)</option>
+                            <option data-countryCode="CR" value="506">Costa Rica (+506)</option>
+                            <option data-countryCode="HR" value="385">Croatia (+385)</option>
+                            <option data-countryCode="CU" value="53">Cuba (+53)</option>
+                            <option data-countryCode="CY" value="90392">Cyprus North (+90392)</option>
+                            <option data-countryCode="CY" value="357">Cyprus South (+357)</option>
+                            <option data-countryCode="CZ" value="42">Czech Republic (+42)</option>
+                            <option data-countryCode="DK" value="45">Denmark (+45)</option>
+                            <option data-countryCode="DJ" value="253">Djibouti (+253)</option>
+                            <option data-countryCode="DM" value="1809">Dominica (+1809)</option>
+                            <option data-countryCode="DO" value="1809">Dominican Republic (+1809)</option>
+                            <option data-countryCode="EC" value="593">Ecuador (+593)</option>
+                            <option data-countryCode="EG" value="20">Egypt (+20)</option>
+                            <option data-countryCode="SV" value="503">El Salvador (+503)</option>
+                            <option data-countryCode="GQ" value="240">Equatorial Guinea (+240)</option>
+                            <option data-countryCode="ER" value="291">Eritrea (+291)</option>
+                            <option data-countryCode="EE" value="372">Estonia (+372)</option>
+                            <option data-countryCode="ET" value="251">Ethiopia (+251)</option>
+                            <option data-countryCode="FK" value="500">Falkland Islands (+500)</option>
+                            <option data-countryCode="FO" value="298">Faroe Islands (+298)</option>
+                            <option data-countryCode="FJ" value="679">Fiji (+679)</option>
+                            <option data-countryCode="FI" value="358">Finland (+358)</option>
+                            <option data-countryCode="FR" value="33">France (+33)</option>
+                            <option data-countryCode="GF" value="594">French Guiana (+594)</option>
+                            <option data-countryCode="PF" value="689">French Polynesia (+689)</option>
+                            <option data-countryCode="GA" value="241">Gabon (+241)</option>
+                            <option data-countryCode="GM" value="220">Gambia (+220)</option>
+                            <option data-countryCode="GE" value="7880">Georgia (+7880)</option>
+                            <option data-countryCode="DE" value="49">Germany (+49)</option>
+                            <option data-countryCode="GH" value="233">Ghana (+233)</option>
+                            <option data-countryCode="GI" value="350">Gibraltar (+350)</option>
+                            <option data-countryCode="GR" value="30">Greece (+30)</option>
+                            <option data-countryCode="GL" value="299">Greenland (+299)</option>
+                            <option data-countryCode="GD" value="1473">Grenada (+1473)</option>
+                            <option data-countryCode="GP" value="590">Guadeloupe (+590)</option>
+                            <option data-countryCode="GU" value="671">Guam (+671)</option>
+                            <option data-countryCode="GT" value="502">Guatemala (+502)</option>
+                            <option data-countryCode="GN" value="224">Guinea (+224)</option>
+                            <option data-countryCode="GW" value="245">Guinea - Bissau (+245)</option>
+                            <option data-countryCode="GY" value="592">Guyana (+592)</option>
+                            <option data-countryCode="HT" value="509">Haiti (+509)</option>
+                            <option data-countryCode="HN" value="504">Honduras (+504)</option>
+                            <option data-countryCode="HK" value="852">Hong Kong (+852)</option>
+                            <option data-countryCode="HU" value="36">Hungary (+36)</option>
+                            <option data-countryCode="IS" value="354">Iceland (+354)</option>
+                            <option data-countryCode="ID" value="62">Indonesia (+62)</option>
+                            <option data-countryCode="IR" value="98">Iran (+98)</option>
+                            <option data-countryCode="IQ" value="964">Iraq (+964)</option>
+                            <option data-countryCode="IE" value="353">Ireland (+353)</option>
+                            <option data-countryCode="IL" value="972">Israel (+972)</option>
+                            <option data-countryCode="IT" value="39">Italy (+39)</option>
+                            <option data-countryCode="JM" value="1876">Jamaica (+1876)</option>
+                            <option data-countryCode="JP" value="81">Japan (+81)</option>
+                            <option data-countryCode="JO" value="962">Jordan (+962)</option>
+                            <option data-countryCode="KZ" value="7">Kazakhstan (+7)</option>
+                            <option data-countryCode="KE" value="254">Kenya (+254)</option>
+                            <option data-countryCode="KI" value="686">Kiribati (+686)</option>
+                            <option data-countryCode="KP" value="850">Korea North (+850)</option>
+                            <option data-countryCode="KR" value="82">Korea South (+82)</option>
+                            <option data-countryCode="KW" value="965">Kuwait (+965)</option>
+                            <option data-countryCode="KG" value="996">Kyrgyzstan (+996)</option>
+                            <option data-countryCode="LA" value="856">Laos (+856)</option>
+                            <option data-countryCode="LV" value="371">Latvia (+371)</option>
+                            <option data-countryCode="LB" value="961">Lebanon (+961)</option>
+                            <option data-countryCode="LS" value="266">Lesotho (+266)</option>
+                            <option data-countryCode="LR" value="231">Liberia (+231)</option>
+                            <option data-countryCode="LY" value="218">Libya (+218)</option>
+                            <option data-countryCode="LI" value="417">Liechtenstein (+417)</option>
+                            <option data-countryCode="LT" value="370">Lithuania (+370)</option>
+                            <option data-countryCode="LU" value="352">Luxembourg (+352)</option>
+                            <option data-countryCode="MO" value="853">Macao (+853)</option>
+                            <option data-countryCode="MK" value="389">Macedonia (+389)</option>
+                            <option data-countryCode="MG" value="261">Madagascar (+261)</option>
+                            <option data-countryCode="MW" value="265">Malawi (+265)</option>
+                            <option data-countryCode="MY" value="60">Malaysia (+60)</option>
+                            <option data-countryCode="MV" value="960">Maldives (+960)</option>
+                            <option data-countryCode="ML" value="223">Mali (+223)</option>
+                            <option data-countryCode="MT" value="356">Malta (+356)</option>
+                            <option data-countryCode="MH" value="692">Marshall Islands (+692)</option>
+                            <option data-countryCode="MQ" value="596">Martinique (+596)</option>
+                            <option data-countryCode="MR" value="222">Mauritania (+222)</option>
+                            <option data-countryCode="YT" value="269">Mayotte (+269)</option>
+                            <option data-countryCode="MX" value="52">Mexico (+52)</option>
+                            <option data-countryCode="FM" value="691">Micronesia (+691)</option>
+                            <option data-countryCode="MD" value="373">Moldova (+373)</option>
+                            <option data-countryCode="MC" value="377">Monaco (+377)</option>
+                            <option data-countryCode="MN" value="976">Mongolia (+976)</option>
+                            <option data-countryCode="MS" value="1664">Montserrat (+1664)</option>
+                            <option data-countryCode="MA" value="212">Morocco (+212)</option>
+                            <option data-countryCode="MZ" value="258">Mozambique (+258)</option>
+                            <option data-countryCode="MN" value="95">Myanmar (+95)</option>
+                            <option data-countryCode="NA" value="264">Namibia (+264)</option>
+                            <option data-countryCode="NR" value="674">Nauru (+674)</option>
+                            <option data-countryCode="NP" value="977">Nepal (+977)</option>
+                            <option data-countryCode="NL" value="31">Netherlands (+31)</option>
+                            <option data-countryCode="NC" value="687">New Caledonia (+687)</option>
+                            <option data-countryCode="NZ" value="64">New Zealand (+64)</option>
+                            <option data-countryCode="NI" value="505">Nicaragua (+505)</option>
+                            <option data-countryCode="NE" value="227">Niger (+227)</option>
+                            <option data-countryCode="NG" value="234">Nigeria (+234)</option>
+                            <option data-countryCode="NU" value="683">Niue (+683)</option>
+                            <option data-countryCode="NF" value="672">Norfolk Islands (+672)</option>
+                            <option data-countryCode="NP" value="670">Northern Marianas (+670)</option>
+                            <option data-countryCode="NO" value="47">Norway (+47)</option>
+                            <option data-countryCode="OM" value="968">Oman (+968)</option>
+                            <option data-countryCode="PW" value="680">Palau (+680)</option>
+                            <option data-countryCode="PA" value="507">Panama (+507)</option>
+                            <option data-countryCode="PG" value="675">Papua New Guinea (+675)</option>
+                            <option data-countryCode="PY" value="595">Paraguay (+595)</option>
+                            <option data-countryCode="PE" value="51">Peru (+51)</option>
+                            <option data-countryCode="PH" value="63">Philippines (+63)</option>
+                            <option data-countryCode="PL" value="48">Poland (+48)</option>
+                            <option data-countryCode="PT" value="351">Portugal (+351)</option>
+                            <option data-countryCode="PR" value="1787">Puerto Rico (+1787)</option>
+                            <option data-countryCode="QA" value="974">Qatar (+974)</option>
+                            <option data-countryCode="RE" value="262">Reunion (+262)</option>
+                            <option data-countryCode="RO" value="40">Romania (+40)</option>
+                            <option data-countryCode="RU" value="7">Russia (+7)</option>
+                            <option data-countryCode="RW" value="250">Rwanda (+250)</option>
+                            <option data-countryCode="SM" value="378">San Marino (+378)</option>
+                            <option data-countryCode="ST" value="239">Sao Tome &amp; Principe (+239)</option>
+                            <option data-countryCode="SA" value="966">Saudi Arabia (+966)</option>
+                            <option data-countryCode="SN" value="221">Senegal (+221)</option>
+                            <option data-countryCode="CS" value="381">Serbia (+381)</option>
+                            <option data-countryCode="SC" value="248">Seychelles (+248)</option>
+                            <option data-countryCode="SL" value="232">Sierra Leone (+232)</option>
+                            <option data-countryCode="SG" value="65">Singapore (+65)</option>
+                            <option data-countryCode="SK" value="421">Slovak Republic (+421)</option>
+                            <option data-countryCode="SI" value="386">Slovenia (+386)</option>
+                            <option data-countryCode="SB" value="677">Solomon Islands (+677)</option>
+                            <option data-countryCode="SO" value="252">Somalia (+252)</option>
+                            <option data-countryCode="ZA" value="27">South Africa (+27)</option>
+                            <option data-countryCode="ES" value="34">Spain (+34)</option>
+                            <option data-countryCode="LK" value="94">Sri Lanka (+94)</option>
+                            <option data-countryCode="SH" value="290">St. Helena (+290)</option>
+                            <option data-countryCode="KN" value="1869">St. Kitts (+1869)</option>
+                            <option data-countryCode="SC" value="1758">St. Lucia (+1758)</option>
+                            <option data-countryCode="SD" value="249">Sudan (+249)</option>
+                            <option data-countryCode="SR" value="597">Suriname (+597)</option>
+                            <option data-countryCode="SZ" value="268">Swaziland (+268)</option>
+                            <option data-countryCode="SE" value="46">Sweden (+46)</option>
+                            <option data-countryCode="CH" value="41">Switzerland (+41)</option>
+                            <option data-countryCode="SI" value="963">Syria (+963)</option>
+                            <option data-countryCode="TW" value="886">Taiwan (+886)</option>
+                            <option data-countryCode="TJ" value="7">Tajikstan (+7)</option>
+                            <option data-countryCode="TH" value="66">Thailand (+66)</option>
+                            <option data-countryCode="TG" value="228">Togo (+228)</option>
+                            <option data-countryCode="TO" value="676">Tonga (+676)</option>
+                            <option data-countryCode="TT" value="1868">Trinidad &amp; Tobago (+1868)</option>
+                            <option data-countryCode="TN" value="216">Tunisia (+216)</option>
+                            <option data-countryCode="TR" value="90">Turkey (+90)</option>
+                            <option data-countryCode="TM" value="7">Turkmenistan (+7)</option>
+                            <option data-countryCode="TM" value="993">Turkmenistan (+993)</option>
+                            <option data-countryCode="TC" value="1649">Turks &amp; Caicos Islands (+1649)</option>
+                            <option data-countryCode="TV" value="688">Tuvalu (+688)</option>
+                            <option data-countryCode="UG" value="256">Uganda (+256)</option>
+                            <option data-countryCode="UA" value="380">Ukraine (+380)</option>
+                            <option data-countryCode="AE" value="971">United Arab Emirates (+971)</option>
+                            <option data-countryCode="UY" value="598">Uruguay (+598)</option>
+                            <option data-countryCode="UZ" value="7">Uzbekistan (+7)</option>
+                            <option data-countryCode="VU" value="678">Vanuatu (+678)</option>
+                            <option data-countryCode="VA" value="379">Vatican City (+379)</option>
+                            <option data-countryCode="VE" value="58">Venezuela (+58)</option>
+                            <option data-countryCode="VN" value="84">Vietnam (+84)</option>
+                            <option data-countryCode="VG" value="84">Virgin Islands - British (+1284)</option>
+                            <option data-countryCode="VI" value="84">Virgin Islands - US (+1340)</option>
+                            <option data-countryCode="WF" value="681">Wallis &amp; Futuna (+681)</option>
+                            <option data-countryCode="YE" value="969">Yemen (North)(+969)</option>
+                            <option data-countryCode="YE" value="967">Yemen (South)(+967)</option>
+                            <option data-countryCode="ZM" value="260">Zambia (+260)</option>
+                            <option data-countryCode="ZW" value="263">Zimbabwe (+263)</option>
+                        </optgroup>
+                    </select>
+                    <input type="tel" id="phone" class="phone-number" placeholder="9876543210">
+                </div>
             </div>
             
             <button class="phone-btn" id="send-otp-btn">Send OTP</button>
@@ -28,15 +599,45 @@
             
             <div class="divider">OR</div>
             
-            <button class="google-btn" id="google-signin-btn">
-                <img src="https://upload.wikimedia.org/wikipedia/commons/5/53/Google_%22G%22_Logo.svg" class="google-icon" alt="Google logo">
-                Sign in with Google
+          
+
+
+
+<!-- Google Sign-In Button -->
+<button class="gsi-material-button" id="google-signin-btn">
+    <div class="gsi-material-button-state"></div>
+    <div class="gsi-material-button-content-wrapper">
+        <div class="gsi-material-button-icon">
+            <svg version="1.1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" xmlns:xlink="http://www.w3.org/1999/xlink" style="display: block;">
+                <path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"></path>
+                <path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"></path>
+                <path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"></path>
+                <path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"></path>
+                <path fill="none" d="M0 0h48v48H0z"></path>
+            </svg>
+        </div>
+        <span class="gsi-material-button-contents">Sign in with Google</span>
+    </div>
+</button>
+
+
+            <button class="microsoft-btn" id="microsoft-signin-btn">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/4/44/Microsoft_logo.svg" class="provider-icon" alt="Microsoft logo">
+                <span class="buttonText">Sign in with Microsoft</span>
             </button>
             
             <div id="recaptcha-container" class="recaptcha-container"></div>
             
             <div id="status-message" class="status"></div>
         </div>
+
+
+
+        <a href="https://www.iubenda.com/terms-and-conditions/68254758" class="iubenda-white iubenda-noiframe iubenda-embed iubenda-noiframe " title="Terms and Conditions ">Terms and Conditions</a><script type="text/javascript">(function (w,d) {var loader = function () {var s = d.createElement("script"), tag = d.getElementsByTagName("script")[0]; s.src="https://cdn.iubenda.com/iubenda.js"; tag.parentNode.insertBefore(s,tag);}; if(w.addEventListener){w.addEventListener("load", loader, false);}else if(w.attachEvent){w.attachEvent("onload", loader);}else{w.onload = loader;}})(window, document);</script>
+
+<a href="https://www.iubenda.com/privacy-policy/68254758/cookie-policy" class="iubenda-white iubenda-noiframe iubenda-embed iubenda-noiframe " title="Cookie Policy ">Cookie Policy</a><script type="text/javascript">(function (w,d) {var loader = function () {var s = d.createElement("script"), tag = d.getElementsByTagName("script")[0]; s.src="https://cdn.iubenda.com/iubenda.js"; tag.parentNode.insertBefore(s,tag);}; if(w.addEventListener){w.addEventListener("load", loader, false);}else if(w.attachEvent){w.attachEvent("onload", loader);}else{w.onload = loader;}})(window, document);</script><a href="https://www.iubenda.com/privacy-policy/68254758" class="iubenda-white iubenda-noiframe iubenda-embed iubenda-noiframe " title="Privacy Policy ">Privacy Policy</a><script type="text/javascript">(function (w,d) {var loader = function () {var s = d.createElement("script"), tag = d.getElementsByTagName("script")[0]; s.src="https://cdn.iubenda.com/iubenda.js"; tag.parentNode.insertBefore(s,tag);}; if(w.addEventListener){w.addEventListener("load", loader, false);}else if(w.attachEvent){w.attachEvent("onload", loader);}else{w.onload = loader;}})(window, document);</script>
+
+
         
         <div id="user-section" class="user-info">
             <img id="user-avatar" class="user-avatar" src="" alt="User avatar">
@@ -51,17 +652,20 @@
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-analytics.js"></script>
     
+    <!-- Microsoft Authentication Library (MSAL) -->
+    <script src="https://alcdn.msauth.net/browser/2.24.0/js/msal-browser.min.js"></script>
+    
     <script>
         // Your Firebase configuration
         const firebaseConfig = {
-            apiKey: "########################",
-            authDomain: "########################",
-            databaseURL: "########################",
-            projectId: "########################",
-            storageBucket: "########################",
-            messagingSenderId: "########################",
-            appId: "########################",
-            measurementId: "########################"
+            apiKey: "AIzaSyBhCgtAOzaUFr2STB0D8MLEPYY9gsxQ1k8",
+            authDomain: "nishad-2003.firebaseapp.com",
+            databaseURL: "https://nishad-2003-default-rtdb.firebaseio.com",
+            projectId: "nishad-2003",
+            storageBucket: "nishad-2003.firebasestorage.app",
+            messagingSenderId: "498275983867",
+            appId: "1:498275983867:web:7686c69457a318feb5ab5e",
+            measurementId: "G-FVSW9N4RCQ"
         };
 
         // Initialize Firebase
@@ -69,14 +673,31 @@
         const analytics = firebase.analytics();
         const auth = firebase.auth();
         
+        // MSAL configuration
+        const msalConfig = {
+            auth: {
+                clientId: "YOUR_MICROSOFT_CLIENT_ID", // Replace with your Microsoft client ID
+                authority: "https://login.microsoftonline.com/common",
+                redirectUri: window.location.origin
+            },
+            cache: {
+                cacheLocation: "sessionStorage",
+                storeAuthStateInCookie: false
+            }
+        };
+        
+        const msalInstance = new msal.PublicClientApplication(msalConfig);
+        
         // DOM elements
         const authSection = document.getElementById('auth-section');
         const userSection = document.getElementById('user-section');
         const sendOtpBtn = document.getElementById('send-otp-btn');
         const verifyOtpBtn = document.getElementById('verify-otp-btn');
         const googleSignInBtn = document.getElementById('google-signin-btn');
+        const microsoftSignInBtn = document.getElementById('microsoft-signin-btn');
         const signOutBtn = document.getElementById('sign-out-btn');
         const phoneInput = document.getElementById('phone');
+        const countryCodeSelect = document.getElementById('country-code');
         const otpInput = document.getElementById('otp');
         const otpSection = document.getElementById('otp-section');
         const statusMessage = document.getElementById('status-message');
@@ -97,6 +718,7 @@
         
         // Send OTP
         sendOtpBtn.addEventListener('click', async () => {
+            const countryCode = countryCodeSelect.value;
             const phoneNumber = phoneInput.value.trim();
             
             if (!phoneNumber) {
@@ -104,16 +726,24 @@
                 return;
             }
             
+            const fullPhoneNumber = countryCode + phoneNumber;
+            
             try {
                 if (!recaptchaVerifier) initRecaptcha();
                 
-                confirmationResult = await auth.signInWithPhoneNumber(phoneNumber, recaptchaVerifier);
+                confirmationResult = await auth.signInWithPhoneNumber(fullPhoneNumber, recaptchaVerifier);
                 otpSection.style.display = 'block';
                 sendOtpBtn.style.display = 'none';
                 showStatus('OTP sent to your phone', 'success');
             } catch (error) {
                 console.error('Error sending OTP:', error);
                 showStatus(error.message, 'error');
+                
+                // Reset reCAPTCHA on error
+                if (recaptchaVerifier) {
+                    recaptchaVerifier.clear();
+                    initRecaptcha();
+                }
             }
         });
         
@@ -127,11 +757,13 @@
             }
             
             try {
-                await confirmationResult.confirm(otp);
+                const result = await confirmationResult.confirm(otp);
                 showStatus('Phone number verified!', 'success');
+                analytics.logEvent('phone_verification_success');
             } catch (error) {
                 console.error('Error verifying OTP:', error);
                 showStatus('Invalid OTP. Please try again.', 'error');
+                analytics.logEvent('phone_verification_failure', { error: error.message });
             }
         });
         
@@ -139,19 +771,64 @@
         googleSignInBtn.addEventListener('click', () => {
             const provider = new firebase.auth.GoogleAuthProvider();
             
+            // Add additional scopes if needed
+            provider.addScope('profile');
+            provider.addScope('email');
+            
             auth.signInWithPopup(provider)
                 .then((result) => {
                     // Google sign-in successful
+                    analytics.logEvent('google_signin_success');
                 })
                 .catch((error) => {
                     console.error('Google sign-in error:', error);
                     showStatus(error.message, 'error');
+                    analytics.logEvent('google_signin_failure', { error: error.message });
                 });
+        });
+        
+        // Microsoft Sign-In
+        microsoftSignInBtn.addEventListener('click', async () => {
+            try {
+                const loginRequest = {
+                    scopes: ["openid", "profile", "email"]
+                };
+                
+                const authResult = await msalInstance.loginPopup(loginRequest);
+                
+                // Get the Microsoft access token
+                const microsoftAccessToken = authResult.accessToken;
+                
+                // Create a Microsoft credential
+                const credential = firebase.auth.OAuthProvider.credential(
+                    'microsoft.com',
+                    microsoftAccessToken
+                );
+                
+                // Sign in to Firebase with the Microsoft credential
+                const firebaseUserCredential = await auth.signInWithCredential(credential);
+                
+                // Microsoft sign-in successful
+                showStatus('Microsoft sign-in successful!', 'success');
+                analytics.logEvent('microsoft_signin_success');
+            } catch (error) {
+                console.error('Microsoft sign-in error:', error);
+                showStatus(error.message, 'error');
+                analytics.logEvent('microsoft_signin_failure', { error: error.message });
+            }
         });
         
         // Sign Out
         signOutBtn.addEventListener('click', () => {
-            auth.signOut();
+            auth.signOut()
+                .then(() => {
+                    showStatus('Signed out successfully', 'success');
+                    analytics.logEvent('signout');
+                })
+                .catch((error) => {
+                    console.error('Sign out error:', error);
+                    showStatus(error.message, 'error');
+                });
         });
         
         // Auth state listener
@@ -172,6 +849,7 @@
                 }
                 
                 showStatus(`Welcome, ${user.displayName || 'User'}!`, 'success');
+                analytics.logEvent('login', { method: user.providerData[0]?.providerId || 'phone' });
             } else {
                 // User is signed out
                 authSection.style.display = 'block';
@@ -191,6 +869,520 @@
         
         // Initialize
         initRecaptcha();
+        
+        // Set language to browser preference
+        firebase.auth().useDeviceLanguage();
     </script>
+
+    <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Secure Authentication</title>
+    <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet" type="text/css">
+    <style>
+        /* Previous styles remain the same, add these new styles: */
+        
+        .consent-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .consent-content {
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            padding: 30px;
+            width: 90%;
+            max-width: 800px;
+            max-height: 80vh;
+            overflow-y: auto;
+        }
+        
+        .consent-title {
+            color: #333;
+            margin-bottom: 20px;
+            font-size: 24px;
+            text-align: center;
+        }
+        
+        .consent-text {
+            margin-bottom: 20px;
+            line-height: 1.6;
+            color: #555;
+        }
+        
+        .consent-section {
+            margin-bottom: 20px;
+        }
+        
+        .consent-section h3 {
+            color: #333;
+            margin-bottom: 10px;
+        }
+        
+        .consent-checkbox {
+            margin: 20px 0;
+            display: flex;
+            align-items: flex-start;
+        }
+        
+        .consent-checkbox input {
+            margin-right: 10px;
+            margin-top: 3px;
+        }
+        
+        .consent-checkbox label {
+            color: #555;
+            font-size: 14px;
+        }
+        
+        .consent-checkbox a {
+            color: #4285f4;
+            text-decoration: none;
+        }
+        
+        .consent-checkbox a:hover {
+            text-decoration: underline;
+        }
+        
+        .consent-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+        }
+        
+        .consent-btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            font-size: 16px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+        
+        .consent-accept {
+            background-color: #4285f4;
+            color: white;
+        }
+        
+        .consent-accept:hover {
+            background-color: #3367d6;
+        }
+        
+        .consent-decline {
+            background-color: #f5f5f5;
+            color: #555;
+            border: 1px solid #ddd;
+        }
+        
+        .consent-decline:hover {
+            background-color: #e0e0e0;
+        }
+        
+        /* Add this to hide the main content initially */
+        .main-content {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <!-- Consent Modal -->
+    <div id="consent-modal" class="consent-modal">
+        <div class="consent-content">
+            <h2 class="consent-title">Privacy Policy & Terms of Service</h2>
+            
+            <div class="consent-section">
+                <h3>Privacy Policy</h3>
+                <div class="consent-text">
+                    <p>We respect your privacy and are committed to protecting your personal data. This privacy policy will inform you about how we handle your personal data when you use our service.</p>
+                    
+                    <h4>1. Information We Collect</h4>
+                    <p>We may collect the following information when you use our authentication service:</p>
+                    <ul>
+                        <li>Phone number (for phone authentication)</li>
+                        <li>Email address (for email authentication)</li>
+                        <li>Basic profile information (name, profile picture) from third-party providers</li>
+                        <li>Authentication tokens and identifiers</li>
+                        <li>Technical information about your device and browser</li>
+                    </ul>
+                    
+                    <h4>2. How We Use Your Information</h4>
+                    <p>We use the information we collect to:</p>
+                    <ul>
+                        <li>Provide and maintain our authentication service</li>
+                        <li>Verify your identity</li>
+                        <li>Improve our service</li>
+                        <li>Prevent fraud and abuse</li>
+                        <li>Comply with legal obligations</li>
+                    </ul>
+                    
+                    <h4>3. Data Security</h4>
+                    <p>We implement appropriate technical and organizational measures to protect your personal data against unauthorized access, alteration, or destruction.</p>
+                    
+                    <h4>4. Data Sharing</h4>
+                    <p>We do not sell your personal data. We may share information with:</p>
+                    <ul>
+                        <li>Service providers who assist in operating our service</li>
+                        <li>Legal authorities when required by law</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="consent-section">
+                <h3>Terms of Service</h3>
+                <div class="consent-text">
+                    <p>By using our authentication service, you agree to the following terms:</p>
+                    
+                    <h4>1. Acceptable Use</h4>
+                    <p>You agree not to:</p>
+                    <ul>
+                        <li>Use the service for any illegal purpose</li>
+                        <li>Attempt to gain unauthorized access to any accounts</li>
+                        <li>Impersonate any person or entity</li>
+                        <li>Interfere with the proper functioning of the service</li>
+                    </ul>
+                    
+                    <h4>2. Account Security</h4>
+                    <p>You are responsible for maintaining the confidentiality of your authentication credentials and for all activities that occur under your account.</p>
+                    
+                    <h4>3. Service Availability</h4>
+                    <p>We strive to maintain service availability but cannot guarantee uninterrupted access. We may temporarily suspend the service for maintenance or upgrades.</p>
+                    
+                    <h4>4. Limitation of Liability</h4>
+                    <p>We are not liable for any indirect, incidental, or consequential damages arising from your use of the service.</p>
+                </div>
+            </div>
+            
+            <div class="consent-checkbox">
+                <input type="checkbox" id="consent-checkbox">
+                <label for="consent-checkbox">I have read and agree to the <a href="#" id="privacy-link">Privacy Policy</a> and <a href="#" id="terms-link">Terms of Service</a></label>
+            </div>
+            
+            <div class="consent-buttons">
+                <button id="consent-decline" class="consent-btn consent-decline">Decline</button>
+                <button id="consent-accept" class="consent-btn consent-accept" disabled>Accept</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Main Content (your existing content) -->
+    <div class="main-content">
+        <div class="container">
+            <!-- Your existing authentication form here -->
+            <!-- ... (all your existing HTML content remains the same) ... -->
+        </div>
+    </div>
+
+
+
+
+
+
+
+
+
+
+
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-analytics.js"></script>
+    
+    <!-- Microsoft Authentication Library (MSAL) -->
+    <script src="https://alcdn.msauth.net/browser/2.24.0/js/msal-browser.min.js"></script>
+    
+    <script>
+        // Your Firebase configuration
+          const firebaseConfig = {
+            apiKey: "########################",
+            authDomain: "########################",
+            databaseURL: "########################",
+            projectId: "########################",
+            storageBucket: "########################",
+            messagingSenderId: "########################",
+            appId: "########################",
+            measurementId: "########################"
+        };
+        // Initialize Firebase
+        const app = firebase.initializeApp(firebaseConfig);
+        const analytics = firebase.analytics();
+        const auth = firebase.auth();
+        
+        // MSAL configuration
+        const msalConfig = {
+            auth: {
+                clientId: "YOUR_MICROSOFT_CLIENT_ID", // Replace with your Microsoft client ID
+                authority: "https://login.microsoftonline.com/common",
+                redirectUri: window.location.origin
+            },
+            cache: {
+                cacheLocation: "sessionStorage",
+                storeAuthStateInCookie: false
+            }
+        };
+        
+        const msalInstance = new msal.PublicClientApplication(msalConfig);
+        
+        // Consent elements
+        const consentModal = document.getElementById('consent-modal');
+        const consentCheckbox = document.getElementById('consent-checkbox');
+        const consentAcceptBtn = document.getElementById('consent-accept');
+        const consentDeclineBtn = document.getElementById('consent-decline');
+        const privacyLink = document.getElementById('privacy-link');
+        const termsLink = document.getElementById('terms-link');
+        const mainContent = document.querySelector('.main-content');
+        
+        // Show consent modal on page load
+        window.addEventListener('load', () => {
+            // Check if user has already consented
+            const hasConsented = localStorage.getItem('authConsentGiven');
+            
+            if (!hasConsented) {
+                consentModal.style.display = 'flex';
+            } else {
+                mainContent.style.display = 'block';
+            }
+        });
+        
+        // Enable accept button when checkbox is checked
+        consentCheckbox.addEventListener('change', () => {
+            consentAcceptBtn.disabled = !consentCheckbox.checked;
+        });
+        
+        // Handle accept button click
+        consentAcceptBtn.addEventListener('click', () => {
+            localStorage.setItem('authConsentGiven', 'true');
+            consentModal.style.display = 'none';
+            mainContent.style.display = 'block';
+            
+            // Log consent in analytics
+            analytics.logEvent('consent_accepted');
+        });
+        
+        // Handle decline button click
+        consentDeclineBtn.addEventListener('click', () => {
+            // You might want to redirect to another page or show a message
+            alert('You must accept our Privacy Policy and Terms of Service to use this service.');
+            
+            // Log consent decline in analytics
+            analytics.logEvent('consent_declined');
+        });
+        
+        // Handle privacy link click
+        privacyLink.addEventListener('click', (e) => {
+            e.preventDefault();
+            alert('Privacy policy would open in a new window or modal in a production environment.');
+        });
+        
+        // Handle terms link click
+        termsLink.addEventListener('click', (e) => {
+            e.preventDefault();
+            alert('Terms of service would open in a new window or modal in a production environment.');
+        });
+
+        /* 
+        REST OF YOUR EXISTING JAVASCRIPT CODE REMAINS THE SAME
+        (all the authentication logic you already have)
+        Just make sure it's placed after the consent-related code above
+        */
+        
+        // DOM elements
+        const authSection = document.getElementById('auth-section');
+        const userSection = document.getElementById('user-section');
+        const sendOtpBtn = document.getElementById('send-otp-btn');
+        const verifyOtpBtn = document.getElementById('verify-otp-btn');
+        const googleSignInBtn = document.getElementById('google-signin-btn');
+        const microsoftSignInBtn = document.getElementById('microsoft-signin-btn');
+        const signOutBtn = document.getElementById('sign-out-btn');
+        const phoneInput = document.getElementById('phone');
+        const countryCodeSelect = document.getElementById('country-code');
+        const otpInput = document.getElementById('otp');
+        const otpSection = document.getElementById('otp-section');
+        const statusMessage = document.getElementById('status-message');
+        const recaptchaContainer = document.getElementById('recaptcha-container');
+        
+        let confirmationResult;
+        let recaptchaVerifier;
+        
+        // Initialize recaptcha
+        function initRecaptcha() {
+            recaptchaVerifier = new firebase.auth.RecaptchaVerifier('recaptcha-container', {
+                'size': 'invisible',
+                'callback': () => {
+                    // reCAPTCHA solved, allow sendOTP
+                }
+            });
+        }
+        
+        // Send OTP
+        sendOtpBtn.addEventListener('click', async () => {
+            const countryCode = countryCodeSelect.value;
+            const phoneNumber = phoneInput.value.trim();
+            
+            if (!phoneNumber) {
+                showStatus('Please enter a phone number', 'error');
+                return;
+            }
+            
+            const fullPhoneNumber = countryCode + phoneNumber;
+            
+            try {
+                if (!recaptchaVerifier) initRecaptcha();
+                
+                confirmationResult = await auth.signInWithPhoneNumber(fullPhoneNumber, recaptchaVerifier);
+                otpSection.style.display = 'block';
+                sendOtpBtn.style.display = 'none';
+                showStatus('OTP sent to your phone', 'success');
+            } catch (error) {
+                console.error('Error sending OTP:', error);
+                showStatus(error.message, 'error');
+                
+                // Reset reCAPTCHA on error
+                if (recaptchaVerifier) {
+                    recaptchaVerifier.clear();
+                    initRecaptcha();
+                }
+            }
+        });
+        
+        // Verify OTP
+        verifyOtpBtn.addEventListener('click', async () => {
+            const otp = otpInput.value.trim();
+            
+            if (!otp || otp.length !== 6) {
+                showStatus('Please enter a valid 6-digit OTP', 'error');
+                return;
+            }
+            
+            try {
+                const result = await confirmationResult.confirm(otp);
+                showStatus('Phone number verified!', 'success');
+                analytics.logEvent('phone_verification_success');
+            } catch (error) {
+                console.error('Error verifying OTP:', error);
+                showStatus('Invalid OTP. Please try again.', 'error');
+                analytics.logEvent('phone_verification_failure', { error: error.message });
+            }
+        });
+        
+        // Google Sign-In
+        googleSignInBtn.addEventListener('click', () => {
+            const provider = new firebase.auth.GoogleAuthProvider();
+            
+            // Add additional scopes if needed
+            provider.addScope('profile');
+            provider.addScope('email');
+            
+            auth.signInWithPopup(provider)
+                .then((result) => {
+                    // Google sign-in successful
+                    analytics.logEvent('google_signin_success');
+                })
+                .catch((error) => {
+                    console.error('Google sign-in error:', error);
+                    showStatus(error.message, 'error');
+                    analytics.logEvent('google_signin_failure', { error: error.message });
+                });
+        });
+        
+        // Microsoft Sign-In
+        microsoftSignInBtn.addEventListener('click', async () => {
+            try {
+                const loginRequest = {
+                    scopes: ["openid", "profile", "email"]
+                };
+                
+                const authResult = await msalInstance.loginPopup(loginRequest);
+                
+                // Get the Microsoft access token
+                const microsoftAccessToken = authResult.accessToken;
+                
+                // Create a Microsoft credential
+                const credential = firebase.auth.OAuthProvider.credential(
+                    'microsoft.com',
+                    microsoftAccessToken
+                );
+                
+                // Sign in to Firebase with the Microsoft credential
+                const firebaseUserCredential = await auth.signInWithCredential(credential);
+                
+                // Microsoft sign-in successful
+                showStatus('Microsoft sign-in successful!', 'success');
+                analytics.logEvent('microsoft_signin_success');
+            } catch (error) {
+                console.error('Microsoft sign-in error:', error);
+                showStatus(error.message, 'error');
+                analytics.logEvent('microsoft_signin_failure', { error: error.message });
+            }
+        });
+        
+        // Sign Out
+        signOutBtn.addEventListener('click', () => {
+            auth.signOut()
+                .then(() => {
+                    showStatus('Signed out successfully', 'success');
+                    analytics.logEvent('signout');
+                })
+                .catch((error) => {
+                    console.error('Sign out error:', error);
+                    showStatus(error.message, 'error');
+                });
+        });
+        
+        // Auth state listener
+        auth.onAuthStateChanged((user) => {
+            if (user) {
+                // User is signed in
+                authSection.style.display = 'none';
+                userSection.style.display = 'block';
+                
+                // Update user info
+                document.getElementById('user-name').textContent = user.displayName || 'User';
+                document.getElementById('user-email').textContent = user.email || user.phoneNumber || '';
+                
+                if (user.photoURL) {
+                    document.getElementById('user-avatar').src = user.photoURL;
+                } else {
+                    document.getElementById('user-avatar').src = 'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png';
+                }
+                
+                showStatus(`Welcome, ${user.displayName || 'User'}!`, 'success');
+                analytics.logEvent('login', { method: user.providerData[0]?.providerId || 'phone' });
+            } else {
+                // User is signed out
+                authSection.style.display = 'block';
+                userSection.style.display = 'none';
+                otpSection.style.display = 'none';
+                sendOtpBtn.style.display = 'block';
+                phoneInput.value = '';
+                otpInput.value = '';
+            }
+        });
+        
+        // Show status message
+        function showStatus(message, type) {
+            statusMessage.textContent = message;
+            statusMessage.className = 'status ' + type;
+        }
+        
+        // Initialize
+        initRecaptcha();
+        
+        // Set language to browser preference
+        firebase.auth().useDeviceLanguage();
+    </script>
+</body>
+</html>
 </body>
 </html>
