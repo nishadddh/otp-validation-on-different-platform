@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -290,64 +291,70 @@
             background-color: #d32f2f;
         }
 
+
+
         /* Google Sign-In Button Styles - Adjusted to match Microsoft */
-        .gsi-material-button {
-            -webkit-appearance: none;
-            background-color: white;
-            border: 1px solid #747775;
-            border-radius: 4px;
-            box-sizing: border-box;
-            color: #1f1f1f;
-            cursor: pointer;
-            font-family: 'Roboto', sans-serif;
-            font-size: 14px;
-            height: 40px;
-            letter-spacing: 0.25px;
-            outline: none;
-            overflow: hidden;
-            padding: 0 12px;
-            position: relative;
-            text-align: center;
-            transition: background-color 0.2s, border-color 0.2s;
-            vertical-align: middle;
-            width: 100%;
-            margin-bottom: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
+.gsi-material-button {
+    -webkit-appearance: none;
+    background-color: white;
+    border: 1px solid #747775;
+    border-radius: 4px;
+    box-sizing: border-box;
+    color: #1f1f1f;
+    cursor: pointer;
+    font-family: 'Roboto', sans-serif;
+    font-size: 14px;
+    height: 40px;
+    letter-spacing: 0.25px;
+    outline: none;
+    overflow: hidden;
+    padding: 0 12px;
+    position: relative;
+    text-align: center;
+    transition: background-color 0.2s, border-color 0.2s;
+    vertical-align: middle;
+    width: 100%;
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
 
-        .gsi-material-button .gsi-material-button-icon {
-            height: 20px;
-            margin-right: 12px;
-            min-width: 20px;
-            width: 20px;
-        }
+.gsi-material-button .gsi-material-button-icon {
+    height: 20px;
+    margin-right: 12px;
+    min-width: 20px;
+    width: 20px;
+}
 
-        .gsi-material-button .gsi-material-button-content-wrapper {
-            align-items: center;
-            display: flex;
-            flex-direction: row;
-            flex-wrap: nowrap;
-            height: 100%;
-            justify-content: center;
-            position: relative;
-            width: 100%;
-        }
+.gsi-material-button .gsi-material-button-content-wrapper {
+    align-items: center;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    height: 100%;
+    justify-content: center;
+    position: relative;
+    width: 100%;
+}
 
-        .gsi-material-button .gsi-material-button-contents {
-            flex-grow: 1;
-            font-family: 'Roboto', sans-serif;
-            font-weight: 500;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            vertical-align: top;
-        }
+.gsi-material-button .gsi-material-button-contents {
+    flex-grow: 1;
+    font-family: 'Roboto', sans-serif;
+    font-weight: 500;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    vertical-align: top;
+}
 
-        .gsi-material-button:hover {
-            background-color: #f9f9f9;
-            box-shadow: 0 1px 2px 0 rgba(60, 64, 67, 0.30), 0 1px 3px 1px rgba(60, 64, 67, 0.15);
-        }
+.gsi-material-button:hover {
+    background-color: #f9f9f9;
+    box-shadow: 0 1px 2px 0 rgba(60, 64, 67, 0.30), 0 1px 3px 1px rgba(60, 64, 67, 0.15);
+}
+
+
+
+
     </style>
 </head>
 <body>
@@ -592,22 +599,27 @@
             
             <div class="divider">OR</div>
             
-            <!-- Google Sign-In Button -->
-            <button class="gsi-material-button" id="google-signin-btn">
-                <div class="gsi-material-button-state"></div>
-                <div class="gsi-material-button-content-wrapper">
-                    <div class="gsi-material-button-icon">
-                        <svg version="1.1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" xmlns:xlink="http://www.w3.org/1999/xlink" style="display: block;">
-                            <path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"></path>
-                            <path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"></path>
-                            <path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"></path>
-                            <path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"></path>
-                            <path fill="none" d="M0 0h48v48H0z"></path>
-                        </svg>
-                    </div>
-                    <span class="gsi-material-button-contents">Sign in with Google</span>
-                </div>
-            </button>
+          
+
+
+
+<!-- Google Sign-In Button -->
+<button class="gsi-material-button" id="google-signin-btn">
+    <div class="gsi-material-button-state"></div>
+    <div class="gsi-material-button-content-wrapper">
+        <div class="gsi-material-button-icon">
+            <svg version="1.1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" xmlns:xlink="http://www.w3.org/1999/xlink" style="display: block;">
+                <path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"></path>
+                <path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"></path>
+                <path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"></path>
+                <path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"></path>
+                <path fill="none" d="M0 0h48v48H0z"></path>
+            </svg>
+        </div>
+        <span class="gsi-material-button-contents">Sign in with Google</span>
+    </div>
+</button>
+
 
             <button class="microsoft-btn" id="microsoft-signin-btn">
                 <img src="https://upload.wikimedia.org/wikipedia/commons/4/44/Microsoft_logo.svg" class="provider-icon" alt="Microsoft logo">
@@ -618,6 +630,14 @@
             
             <div id="status-message" class="status"></div>
         </div>
+
+
+
+        <a href="https://www.iubenda.com/terms-and-conditions/68254758" class="iubenda-white iubenda-noiframe iubenda-embed iubenda-noiframe " title="Terms and Conditions ">Terms and Conditions</a><script type="text/javascript">(function (w,d) {var loader = function () {var s = d.createElement("script"), tag = d.getElementsByTagName("script")[0]; s.src="https://cdn.iubenda.com/iubenda.js"; tag.parentNode.insertBefore(s,tag);}; if(w.addEventListener){w.addEventListener("load", loader, false);}else if(w.attachEvent){w.attachEvent("onload", loader);}else{w.onload = loader;}})(window, document);</script>
+
+<a href="https://www.iubenda.com/privacy-policy/68254758/cookie-policy" class="iubenda-white iubenda-noiframe iubenda-embed iubenda-noiframe " title="Cookie Policy ">Cookie Policy</a><script type="text/javascript">(function (w,d) {var loader = function () {var s = d.createElement("script"), tag = d.getElementsByTagName("script")[0]; s.src="https://cdn.iubenda.com/iubenda.js"; tag.parentNode.insertBefore(s,tag);}; if(w.addEventListener){w.addEventListener("load", loader, false);}else if(w.attachEvent){w.attachEvent("onload", loader);}else{w.onload = loader;}})(window, document);</script><a href="https://www.iubenda.com/privacy-policy/68254758" class="iubenda-white iubenda-noiframe iubenda-embed iubenda-noiframe " title="Privacy Policy ">Privacy Policy</a><script type="text/javascript">(function (w,d) {var loader = function () {var s = d.createElement("script"), tag = d.getElementsByTagName("script")[0]; s.src="https://cdn.iubenda.com/iubenda.js"; tag.parentNode.insertBefore(s,tag);}; if(w.addEventListener){w.addEventListener("load", loader, false);}else if(w.attachEvent){w.attachEvent("onload", loader);}else{w.onload = loader;}})(window, document);</script>
+
+
         
         <div id="user-section" class="user-info">
             <img id="user-avatar" class="user-avatar" src="" alt="User avatar">
@@ -696,57 +716,16 @@
             });
         }
         
-        // Validate phone number format
-        function validatePhoneNumber(phoneNumber, countryCode) {
-            // Remove all non-digit characters
-            const digitsOnly = phoneNumber.replace(/\D/g, '');
-            
-            // Basic validation based on country code
-            switch (countryCode) {
-                case '+91': // India
-                    return digitsOnly.length === 10;
-                case '+1': // USA/Canada
-                    return digitsOnly.length === 10;
-                case '+44': // UK
-                    return digitsOnly.length >= 9 && digitsOnly.length <= 10;
-                default:
-                    // For other countries, accept any length between 5-15 digits
-                    return digitsOnly.length >= 5 && digitsOnly.length <= 15;
-            }
-        }
-        
-        // Format phone number for display
-        function formatPhoneNumber(phoneNumber, countryCode) {
-            const digitsOnly = phoneNumber.replace(/\D/g, '');
-            
-            switch (countryCode) {
-                case '+1': // USA/Canada format: (123) 456-7890
-                    return digitsOnly.replace(/(\d{3})(\d{3})(\d{4})/, '($1) $2-$3');
-                case '+44': // UK format: 01234 567890
-                    return digitsOnly.replace(/(\d{5})(\d+)/, '$1 $2');
-                default:
-                    return digitsOnly;
-            }
-        }
-        
         // Send OTP
         sendOtpBtn.addEventListener('click', async () => {
             const countryCode = countryCodeSelect.value;
-            let phoneNumber = phoneInput.value.trim();
+            const phoneNumber = phoneInput.value.trim();
             
             if (!phoneNumber) {
                 showStatus('Please enter a phone number', 'error');
                 return;
             }
             
-            // Validate phone number format
-            if (!validatePhoneNumber(phoneNumber, countryCode)) {
-                showStatus('Please enter a valid phone number for the selected country', 'error');
-                return;
-            }
-            
-            // Format the phone number (remove all non-digit characters)
-            phoneNumber = phoneNumber.replace(/\D/g, '');
             const fullPhoneNumber = countryCode + phoneNumber;
             
             try {
@@ -758,18 +737,7 @@
                 showStatus('OTP sent to your phone', 'success');
             } catch (error) {
                 console.error('Error sending OTP:', error);
-                
-                // More specific error messages
-                let errorMessage = 'Error sending OTP. Please try again.';
-                if (error.code === 'auth/invalid-phone-number') {
-                    errorMessage = 'Invalid phone number format for the selected country.';
-                } else if (error.code === 'auth/too-many-requests') {
-                    errorMessage = 'Too many requests. Please try again later.';
-                } else if (error.code === 'auth/quota-exceeded') {
-                    errorMessage = 'Quota exceeded. Please try again later.';
-                }
-                
-                showStatus(errorMessage, 'error');
+                showStatus(error.message, 'error');
                 
                 // Reset reCAPTCHA on error
                 if (recaptchaVerifier) {
@@ -794,15 +762,7 @@
                 analytics.logEvent('phone_verification_success');
             } catch (error) {
                 console.error('Error verifying OTP:', error);
-                
-                let errorMessage = 'Invalid OTP. Please try again.';
-                if (error.code === 'auth/invalid-verification-code') {
-                    errorMessage = 'Invalid OTP code. Please check and try again.';
-                } else if (error.code === 'auth/code-expired') {
-                    errorMessage = 'OTP code expired. Please request a new one.';
-                }
-                
-                showStatus(errorMessage, 'error');
+                showStatus('Invalid OTP. Please try again.', 'error');
                 analytics.logEvent('phone_verification_failure', { error: error.message });
             }
         });
@@ -912,15 +872,517 @@
         
         // Set language to browser preference
         firebase.auth().useDeviceLanguage();
+    </script>
+
+    <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Secure Authentication</title>
+    <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet" type="text/css">
+    <style>
+        /* Previous styles remain the same, add these new styles: */
         
-        // Format phone number as user types (optional)
-        phoneInput.addEventListener('input', function(e) {
-            const countryCode = countryCodeSelect.value;
-            const formatted = formatPhoneNumber(this.value, countryCode);
-            if (formatted !== this.value) {
-                this.value = formatted;
+        .consent-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .consent-content {
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            padding: 30px;
+            width: 90%;
+            max-width: 800px;
+            max-height: 80vh;
+            overflow-y: auto;
+        }
+        
+        .consent-title {
+            color: #333;
+            margin-bottom: 20px;
+            font-size: 24px;
+            text-align: center;
+        }
+        
+        .consent-text {
+            margin-bottom: 20px;
+            line-height: 1.6;
+            color: #555;
+        }
+        
+        .consent-section {
+            margin-bottom: 20px;
+        }
+        
+        .consent-section h3 {
+            color: #333;
+            margin-bottom: 10px;
+        }
+        
+        .consent-checkbox {
+            margin: 20px 0;
+            display: flex;
+            align-items: flex-start;
+        }
+        
+        .consent-checkbox input {
+            margin-right: 10px;
+            margin-top: 3px;
+        }
+        
+        .consent-checkbox label {
+            color: #555;
+            font-size: 14px;
+        }
+        
+        .consent-checkbox a {
+            color: #4285f4;
+            text-decoration: none;
+        }
+        
+        .consent-checkbox a:hover {
+            text-decoration: underline;
+        }
+        
+        .consent-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+        }
+        
+        .consent-btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            font-size: 16px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+        
+        .consent-accept {
+            background-color: #4285f4;
+            color: white;
+        }
+        
+        .consent-accept:hover {
+            background-color: #3367d6;
+        }
+        
+        .consent-decline {
+            background-color: #f5f5f5;
+            color: #555;
+            border: 1px solid #ddd;
+        }
+        
+        .consent-decline:hover {
+            background-color: #e0e0e0;
+        }
+        
+        /* Add this to hide the main content initially */
+        .main-content {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <!-- Consent Modal -->
+    <div id="consent-modal" class="consent-modal">
+        <div class="consent-content">
+            <h2 class="consent-title">Privacy Policy & Terms of Service</h2>
+            
+            <div class="consent-section">
+                <h3>Privacy Policy</h3>
+                <div class="consent-text">
+                    <p>We respect your privacy and are committed to protecting your personal data. This privacy policy will inform you about how we handle your personal data when you use our service.</p>
+                    
+                    <h4>1. Information We Collect</h4>
+                    <p>We may collect the following information when you use our authentication service:</p>
+                    <ul>
+                        <li>Phone number (for phone authentication)</li>
+                        <li>Email address (for email authentication)</li>
+                        <li>Basic profile information (name, profile picture) from third-party providers</li>
+                        <li>Authentication tokens and identifiers</li>
+                        <li>Technical information about your device and browser</li>
+                    </ul>
+                    
+                    <h4>2. How We Use Your Information</h4>
+                    <p>We use the information we collect to:</p>
+                    <ul>
+                        <li>Provide and maintain our authentication service</li>
+                        <li>Verify your identity</li>
+                        <li>Improve our service</li>
+                        <li>Prevent fraud and abuse</li>
+                        <li>Comply with legal obligations</li>
+                    </ul>
+                    
+                    <h4>3. Data Security</h4>
+                    <p>We implement appropriate technical and organizational measures to protect your personal data against unauthorized access, alteration, or destruction.</p>
+                    
+                    <h4>4. Data Sharing</h4>
+                    <p>We do not sell your personal data. We may share information with:</p>
+                    <ul>
+                        <li>Service providers who assist in operating our service</li>
+                        <li>Legal authorities when required by law</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="consent-section">
+                <h3>Terms of Service</h3>
+                <div class="consent-text">
+                    <p>By using our authentication service, you agree to the following terms:</p>
+                    
+                    <h4>1. Acceptable Use</h4>
+                    <p>You agree not to:</p>
+                    <ul>
+                        <li>Use the service for any illegal purpose</li>
+                        <li>Attempt to gain unauthorized access to any accounts</li>
+                        <li>Impersonate any person or entity</li>
+                        <li>Interfere with the proper functioning of the service</li>
+                    </ul>
+                    
+                    <h4>2. Account Security</h4>
+                    <p>You are responsible for maintaining the confidentiality of your authentication credentials and for all activities that occur under your account.</p>
+                    
+                    <h4>3. Service Availability</h4>
+                    <p>We strive to maintain service availability but cannot guarantee uninterrupted access. We may temporarily suspend the service for maintenance or upgrades.</p>
+                    
+                    <h4>4. Limitation of Liability</h4>
+                    <p>We are not liable for any indirect, incidental, or consequential damages arising from your use of the service.</p>
+                </div>
+            </div>
+            
+            <div class="consent-checkbox">
+                <input type="checkbox" id="consent-checkbox">
+                <label for="consent-checkbox">I have read and agree to the <a href="#" id="privacy-link">Privacy Policy</a> and <a href="#" id="terms-link">Terms of Service</a></label>
+            </div>
+            
+            <div class="consent-buttons">
+                <button id="consent-decline" class="consent-btn consent-decline">Decline</button>
+                <button id="consent-accept" class="consent-btn consent-accept" disabled>Accept</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Main Content (your existing content) -->
+    <div class="main-content">
+        <div class="container">
+            <!-- Your existing authentication form here -->
+            <!-- ... (all your existing HTML content remains the same) ... -->
+        </div>
+    </div>
+
+
+
+
+
+
+
+
+
+
+
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-analytics.js"></script>
+    
+    <!-- Microsoft Authentication Library (MSAL) -->
+    <script src="https://alcdn.msauth.net/browser/2.24.0/js/msal-browser.min.js"></script>
+    
+    <script>
+        // Your Firebase configuration
+          const firebaseConfig = {
+            apiKey: "########################",
+            authDomain: "########################",
+            databaseURL: "########################",
+            projectId: "########################",
+            storageBucket: "########################",
+            messagingSenderId: "########################",
+            appId: "########################",
+            measurementId: "########################"
+        };
+        // Initialize Firebase
+        const app = firebase.initializeApp(firebaseConfig);
+        const analytics = firebase.analytics();
+        const auth = firebase.auth();
+        
+        // MSAL configuration
+        const msalConfig = {
+            auth: {
+                clientId: "YOUR_MICROSOFT_CLIENT_ID", // Replace with your Microsoft client ID
+                authority: "https://login.microsoftonline.com/common",
+                redirectUri: window.location.origin
+            },
+            cache: {
+                cacheLocation: "sessionStorage",
+                storeAuthStateInCookie: false
+            }
+        };
+        
+        const msalInstance = new msal.PublicClientApplication(msalConfig);
+        
+        // Consent elements
+        const consentModal = document.getElementById('consent-modal');
+        const consentCheckbox = document.getElementById('consent-checkbox');
+        const consentAcceptBtn = document.getElementById('consent-accept');
+        const consentDeclineBtn = document.getElementById('consent-decline');
+        const privacyLink = document.getElementById('privacy-link');
+        const termsLink = document.getElementById('terms-link');
+        const mainContent = document.querySelector('.main-content');
+        
+        // Show consent modal on page load
+        window.addEventListener('load', () => {
+            // Check if user has already consented
+            const hasConsented = localStorage.getItem('authConsentGiven');
+            
+            if (!hasConsented) {
+                consentModal.style.display = 'flex';
+            } else {
+                mainContent.style.display = 'block';
             }
         });
+        
+        // Enable accept button when checkbox is checked
+        consentCheckbox.addEventListener('change', () => {
+            consentAcceptBtn.disabled = !consentCheckbox.checked;
+        });
+        
+        // Handle accept button click
+        consentAcceptBtn.addEventListener('click', () => {
+            localStorage.setItem('authConsentGiven', 'true');
+            consentModal.style.display = 'none';
+            mainContent.style.display = 'block';
+            
+            // Log consent in analytics
+            analytics.logEvent('consent_accepted');
+        });
+        
+        // Handle decline button click
+        consentDeclineBtn.addEventListener('click', () => {
+            // You might want to redirect to another page or show a message
+            alert('You must accept our Privacy Policy and Terms of Service to use this service.');
+            
+            // Log consent decline in analytics
+            analytics.logEvent('consent_declined');
+        });
+        
+        // Handle privacy link click
+        privacyLink.addEventListener('click', (e) => {
+            e.preventDefault();
+            alert('Privacy policy would open in a new window or modal in a production environment.');
+        });
+        
+        // Handle terms link click
+        termsLink.addEventListener('click', (e) => {
+            e.preventDefault();
+            alert('Terms of service would open in a new window or modal in a production environment.');
+        });
+
+        /* 
+        REST OF YOUR EXISTING JAVASCRIPT CODE REMAINS THE SAME
+        (all the authentication logic you already have)
+        Just make sure it's placed after the consent-related code above
+        */
+        
+        // DOM elements
+        const authSection = document.getElementById('auth-section');
+        const userSection = document.getElementById('user-section');
+        const sendOtpBtn = document.getElementById('send-otp-btn');
+        const verifyOtpBtn = document.getElementById('verify-otp-btn');
+        const googleSignInBtn = document.getElementById('google-signin-btn');
+        const microsoftSignInBtn = document.getElementById('microsoft-signin-btn');
+        const signOutBtn = document.getElementById('sign-out-btn');
+        const phoneInput = document.getElementById('phone');
+        const countryCodeSelect = document.getElementById('country-code');
+        const otpInput = document.getElementById('otp');
+        const otpSection = document.getElementById('otp-section');
+        const statusMessage = document.getElementById('status-message');
+        const recaptchaContainer = document.getElementById('recaptcha-container');
+        
+        let confirmationResult;
+        let recaptchaVerifier;
+        
+        // Initialize recaptcha
+        function initRecaptcha() {
+            recaptchaVerifier = new firebase.auth.RecaptchaVerifier('recaptcha-container', {
+                'size': 'invisible',
+                'callback': () => {
+                    // reCAPTCHA solved, allow sendOTP
+                }
+            });
+        }
+        
+        // Send OTP
+        sendOtpBtn.addEventListener('click', async () => {
+            const countryCode = countryCodeSelect.value;
+            const phoneNumber = phoneInput.value.trim();
+            
+            if (!phoneNumber) {
+                showStatus('Please enter a phone number', 'error');
+                return;
+            }
+            
+            const fullPhoneNumber = countryCode + phoneNumber;
+            
+            try {
+                if (!recaptchaVerifier) initRecaptcha();
+                
+                confirmationResult = await auth.signInWithPhoneNumber(fullPhoneNumber, recaptchaVerifier);
+                otpSection.style.display = 'block';
+                sendOtpBtn.style.display = 'none';
+                showStatus('OTP sent to your phone', 'success');
+            } catch (error) {
+                console.error('Error sending OTP:', error);
+                showStatus(error.message, 'error');
+                
+                // Reset reCAPTCHA on error
+                if (recaptchaVerifier) {
+                    recaptchaVerifier.clear();
+                    initRecaptcha();
+                }
+            }
+        });
+        
+        // Verify OTP
+        verifyOtpBtn.addEventListener('click', async () => {
+            const otp = otpInput.value.trim();
+            
+            if (!otp || otp.length !== 6) {
+                showStatus('Please enter a valid 6-digit OTP', 'error');
+                return;
+            }
+            
+            try {
+                const result = await confirmationResult.confirm(otp);
+                showStatus('Phone number verified!', 'success');
+                analytics.logEvent('phone_verification_success');
+            } catch (error) {
+                console.error('Error verifying OTP:', error);
+                showStatus('Invalid OTP. Please try again.', 'error');
+                analytics.logEvent('phone_verification_failure', { error: error.message });
+            }
+        });
+        
+        // Google Sign-In
+        googleSignInBtn.addEventListener('click', () => {
+            const provider = new firebase.auth.GoogleAuthProvider();
+            
+            // Add additional scopes if needed
+            provider.addScope('profile');
+            provider.addScope('email');
+            
+            auth.signInWithPopup(provider)
+                .then((result) => {
+                    // Google sign-in successful
+                    analytics.logEvent('google_signin_success');
+                })
+                .catch((error) => {
+                    console.error('Google sign-in error:', error);
+                    showStatus(error.message, 'error');
+                    analytics.logEvent('google_signin_failure', { error: error.message });
+                });
+        });
+        
+        // Microsoft Sign-In
+        microsoftSignInBtn.addEventListener('click', async () => {
+            try {
+                const loginRequest = {
+                    scopes: ["openid", "profile", "email"]
+                };
+                
+                const authResult = await msalInstance.loginPopup(loginRequest);
+                
+                // Get the Microsoft access token
+                const microsoftAccessToken = authResult.accessToken;
+                
+                // Create a Microsoft credential
+                const credential = firebase.auth.OAuthProvider.credential(
+                    'microsoft.com',
+                    microsoftAccessToken
+                );
+                
+                // Sign in to Firebase with the Microsoft credential
+                const firebaseUserCredential = await auth.signInWithCredential(credential);
+                
+                // Microsoft sign-in successful
+                showStatus('Microsoft sign-in successful!', 'success');
+                analytics.logEvent('microsoft_signin_success');
+            } catch (error) {
+                console.error('Microsoft sign-in error:', error);
+                showStatus(error.message, 'error');
+                analytics.logEvent('microsoft_signin_failure', { error: error.message });
+            }
+        });
+        
+        // Sign Out
+        signOutBtn.addEventListener('click', () => {
+            auth.signOut()
+                .then(() => {
+                    showStatus('Signed out successfully', 'success');
+                    analytics.logEvent('signout');
+                })
+                .catch((error) => {
+                    console.error('Sign out error:', error);
+                    showStatus(error.message, 'error');
+                });
+        });
+        
+        // Auth state listener
+        auth.onAuthStateChanged((user) => {
+            if (user) {
+                // User is signed in
+                authSection.style.display = 'none';
+                userSection.style.display = 'block';
+                
+                // Update user info
+                document.getElementById('user-name').textContent = user.displayName || 'User';
+                document.getElementById('user-email').textContent = user.email || user.phoneNumber || '';
+                
+                if (user.photoURL) {
+                    document.getElementById('user-avatar').src = user.photoURL;
+                } else {
+                    document.getElementById('user-avatar').src = 'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png';
+                }
+                
+                showStatus(`Welcome, ${user.displayName || 'User'}!`, 'success');
+                analytics.logEvent('login', { method: user.providerData[0]?.providerId || 'phone' });
+            } else {
+                // User is signed out
+                authSection.style.display = 'block';
+                userSection.style.display = 'none';
+                otpSection.style.display = 'none';
+                sendOtpBtn.style.display = 'block';
+                phoneInput.value = '';
+                otpInput.value = '';
+            }
+        });
+        
+        // Show status message
+        function showStatus(message, type) {
+            statusMessage.textContent = message;
+            statusMessage.className = 'status ' + type;
+        }
+        
+        // Initialize
+        initRecaptcha();
+        
+        // Set language to browser preference
+        firebase.auth().useDeviceLanguage();
     </script>
+</body>
+</html>
 </body>
 </html>
